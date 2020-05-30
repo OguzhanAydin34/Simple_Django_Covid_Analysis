@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>COVID-19 ANALYSIS</title>
+    <link rel="stylesheet" href="{% static "first_app/css/mystyle.css" %}"/>
+    <style>
+        #countryData {
+            background-color: aquamarine;
+            font-size: 24px;
+            display: inline-block;
+        }
+
+        .countryInfoTableHeaders {
+            margin-bottom: 5px;
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: justify;
+        }
+
+        .countryInfoTable {
+            width: 80%;
+            margin-right: 5%;
+            margin-left: 5%;
+        }
+
+        #countryInfo {
+            width: 20%;
+            margin-right: 5%;
+            margin-left: 15px;
+            min-height: 500px;
+            background-color: lightgrey;
+            padding-top: 10px;
+            padding-bottom: 15px;
+            float: left;
+            border: 2px dimgrey solid;
+        }
+
+        .category {
+            width: 48%;
+            min-width: 250px;
+            height: 100px;
+            line-height: 100px;
+            background-color: aqua;
+            border: 2px solid gray;
+            float: left;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 28px;
+            font-family: "Times New Roman";
+            font-weight: bold;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        .category:hover {
+            font-size: 32px;
+        }
+    </style>
+
+</head>
+<body>
+<h1>Covid-19 Analysis</h1>
+<div style="width: 90%;min-width: 400px;margin-left: 5%;margin-right: 5%;">
+    <form method="get">
+        <input class="category" type="submit" name="world" value="WORLD">
+        <input class="category" type="submit" name="country" value="COUNTRY">
+    </form>
+
+</div>
+<div style="clear: both;"></div>
+<div>
+    <div style="visibility: {{ world_hidden }}">
+        <form method="get">
+            <br>
+            <select name="dataDate" id="dataDate">
+                {% for a in dateAsOption %}
+                    <option value="{{ a }}">{{ a }}</option>"
+                {% endfor %}
+            <option value="" selected disabled>Choose a date</option>
+            </select>
+            <button type="submit" value="Search">Search</button>
+            <br>
+            <img style="visibility: {{ pie_hidden }}" src="{% static pie %}" alt="did not work">
+        </form>
+
+
+    </div>
+
+</div>
+<div id="demo" style="visibility: {{ country_hidden }}">
+    <form method="get">
+        <br>
+        <select name="CountryName" id="CountryName">
+            {% for a in countriesAsOption %}
+                <option value="{{ a }}">{{ a }}</option>"
+            {% endfor %}
+        <option value="" selected disabled>Choose a country</option>
+        </select>
+        <button type="submit" value="Search">Search</button>
+        <br>
+
+    </form>
+    <div id="countryInfo" style="visibility: {{ table_hidden }}">
+        <div class="countryInfoTable" style="margin-bottom:5px;">
+            <h1 style="text-align:center">{{ countryInfo.country }}</h1></div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Population</h5>
+            <li>{{ countryInfo.pop }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Median Age</h5>
+            <li>{{ countryInfo.medianage }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Person per m^2</h5>
+            <li>{{ countryInfo.density }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Urban Population</h5>
+            <li>{{ countryInfo.urbanpop }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Quarantine</h5>
+            <li>{{ countryInfo.quarantine }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Schools Closed</h5>
+            <li>{{ countryInfo.schools }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Public Placed Banned</h5>
+            <li>{{ countryInfo.publicplace }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Amount of males per female at birth</h5>
+            <li>{{ countryInfo.sex0 }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Amount of males per female in the age group 0-14</h5>
+            <li>{{ countryInfo.sex14 }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Amount of males per female in the age group 14-25</h5>
+            <li>{{ countryInfo.sex25 }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Amount of males per female in the age group 26-54</h5>
+            <li>{{ countryInfo.sex54 }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Amount of males per female in the age group 55-64</h5>
+            <li>{{ countryInfo.sex64 }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Amount of males per female in the age group 65+</h5>
+            <li>{{ countryInfo.sex65plus }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Amount of males per female in general</h5>
+            <li>{{ countryInfo.sexratio }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Nominal GDP for 2019 (in 1 million USD)</h5>
+            <li>{{ countryInfo.gdp2019 }}</li>
+        </div>
+        <div class="countryInfoTable">
+            <h5 class="countryInfoTableHeaders">Health expenses in International USD (Inflation taken in count)</h5>
+            <li>{{ countryInfo.healthexp }}</li>
+        </div>
+
+
+    </div>
+    <div style="width: 50%;float: left;visibility: {{ table_hidden }}">
+
+        <img src="{% static image1 %}" alt="Uh Oh, didn't show!">
+        <br>
+        <img src="{% static image2 %}" alt="Uh Oh, didn't show!">
+
+    </div>
+    <div style="clear:both;"></div>
+    <div style="text-align:center;visibility: {{ table_hidden }}">
+        {{ table | safe }}
+    </div>
+
+</div>
+
+
+</body>
+</html>
